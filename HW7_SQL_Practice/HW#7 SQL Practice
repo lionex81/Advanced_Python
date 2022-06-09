@@ -1,0 +1,14 @@
+sudo cp school66.sql /var/lib/mysql
+CREATE DATABASE school66;
+sudo mysql -u root --password="mypassword" school66 < school66.sql
+CREATE TABLE classes (id int AUTO_INCREMENT PRIMARY KEY, class CHAR(2));
+INSERT INTO classes (class) VALUES ('10'), ('11');
+ALTER TABLE students ADD COLUMN class_id INT NOT NULL DEFAULT(1);
+UPDATE students SET class_id = 2 WHERE first_name = 'Petro';
+UPDATE students SET class_id = 2 WHERE first_name = 'Liubomyr';
+SELECT s.first_name, s.last_name, t.name teacher_name, c.class, l.name lesson_name FROM classes c 
+INNER JOIN students s ON s.class_id = c.id  
+INNER JOIN students_lessons sl ON sl.student_id = s.id  
+INNER JOIN lessons l ON l.id = sl.lesson_id 
+INNER JOIN teachers t  ON t.lesson_id = l.id;
+
