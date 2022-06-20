@@ -1,0 +1,75 @@
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker build . -t ubuntu_with_flask
+Sending build context to Docker daemon  14.34kB
+Step 1/5 : FROM ubuntu:20.04
+ ---> 20fffa419e3a
+Step 2/5 : RUN apt-get update && apt-get install -y python python3-pip
+ ---> Using cache
+ ---> dfdf0063963a
+Step 3/5 : RUN pip install flask
+ ---> Using cache
+ ---> f098a9270bf9
+Step 4/5 : COPY app.py /app/
+ ---> Using cache
+ ---> bd54f0b7d28c
+Step 5/5 : ENTRYPOINT FLASK_APP=/app/app.py flask run --host=0.0.0.0 --port=8080
+ ---> Using cache
+ ---> cc03faf98526
+Successfully built cc03faf98526
+Successfully tagged ubuntu_with_flask:latest
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker run -d ubuntu_with_flask
+bded4a26fc2408f4a099cddb4a8f25c79058fd21ea31496ce76e0bc1cbb896df
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker ps
+CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS     NAMES
+bded4a26fc24   ubuntu_with_flask   "/bin/sh -c 'FLASK_A…"   5 seconds ago   Up 4 seconds             serene_cannon
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker attach bd
+lex@lexlinux:~$ cd Advanced_Python/HW8_Docker/
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker ps
+CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS     NAMES
+bded4a26fc24   ubuntu_with_flask   "/bin/sh -c 'FLASK_A…"   5 minutes ago   Up 5 minutes             serene_cannon
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker stop bd
+bd
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker run -it bd
+root@a1f4e8e2d2e3:/# exit
+exit
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker run -it ubuntu_with_flask
+ * Serving Flask app '/app/app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker logs 7b
+ * Serving Flask app '/app/app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.17.0.2:8080 (Press CTRL+C to quit)
+Do not use it in a production deployment.
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.17.0.2:8080 (Press CTRL+C to quit)
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker ps
+CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS          PORTS     NAMES
+7b479997faa0   ubuntu_with_flask   "/bin/sh -c 'FLASK_A…"   11 seconds ago   Up 10 seconds             loving_pare
+lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker inspect 7b
+[
+    {
+        "Id": "7b479997faa0936979114d7450709994c886b2e7770438bcce2c586315074e64",...}]
+
+ lex@lexlinux:~/Advanced_Python/HW8_Docker$ docker logs 7b
+ * Serving Flask app '/app/app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.17.0.2:8080 (Press CTRL+C to quit)
+
+
